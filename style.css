@@ -1,43 +1,87 @@
-:root { --primary: #0070f3; --bg: #0a0a0a; --whatsapp: #25d366; }
-
-body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; overflow: hidden; height: 100vh; }
-
-/* CENTRADO DE TITULOS Y DESCRIPCIONES */
-#main-content {
-    position: fixed; inset: 0; display: flex; justify-content: center;
-    align-items: center; text-align: center;
+:root { 
+    --primary: #0070f3; 
+    --glow: rgba(0, 112, 243, 0.6);
+    --bg: #00020a; 
 }
-.content-wrapper { max-width: 600px; padding: 20px; animation: fadeIn 0.8s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-/* IMAGEN REDONDA CON CONTORNO AZUL */
+body { 
+    background: var(--bg); 
+    color: white; 
+    font-family: 'Courier New', Courier, monospace; 
+    margin: 0; 
+    overflow: hidden; 
+    height: 100vh;
+}
+
+/* EFECTO ESTRELLAS */
+.stars, .twinkling {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; display: block;
+}
+.stars {
+    background: #000 url(https://i.ibb.co/Y7p2p0M/stars.png) repeat top center;
+    z-index: -3;
+}
+.twinkling {
+    background: transparent url(https://i.ibb.co/S7Vn5h6/twinkling.png) repeat top center;
+    z-index: -2;
+    animation: move-twink-back 200s linear infinite;
+}
+@keyframes move-twink-back { from {background-position:0 0;} to {background-position:-10000px 5000px;} }
+
+/* EFECTO NEBULOSA */
+.glowing-void {
+    position: fixed; top: 50%; left: 50%; width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+    transform: translate(-50%, -50%); filter: blur(80px); opacity: 0.3; z-index: -1;
+}
+
+/* SCANLINES (Líneas de TV vieja) */
+.scanlines {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 3px 100%; pointer-events: none; z-index: 10;
+}
+
+/* PANEL GLASSMORPHISM */
+#panel {
+    background: rgba(0, 5, 15, 0.85);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--primary);
+    box-shadow: 0 0 30px var(--glow), inset 0 0 15px var(--glow);
+    border-radius: 0 20px 0 20px; /* Estilo futurista */
+}
+
+/* IMAGEN DE PERFIL NEÓN */
 .avatar-container {
-    width: 90px; height: 90px; margin: 0 auto 10px;
-    border-radius: 50%; border: 3px solid var(--primary);
-    box-shadow: 0 0 20px var(--primary); overflow: hidden;
+    width: 100px; height: 100px; margin: 0 auto;
+    border-radius: 50%; border: 2px solid var(--primary);
+    box-shadow: 0 0 20px var(--primary); position: relative;
+    padding: 5px; background: rgba(0,0,0,0.5);
 }
-.avatar { width: 100%; height: 100%; object-fit: cover; }
 
-/* REPRODUCTOR Y ONDAS */
-.audio-player { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 12px; margin-top: 15px; border: 1px solid #222; }
-#visualizer { width: 100%; height: 50px; background: #000; border-radius: 8px; margin-bottom: 8px; border: 1px solid #333; }
-.controls { display: flex; justify-content: center; gap: 15px; margin-bottom: 10px; }
-.controls button { background: #111; border: 1px solid var(--primary); color: white; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; transition: 0.3s; }
-.controls button:hover { background: var(--primary); box-shadow: 0 0 10px var(--primary); }
-.vol-box { display: flex; align-items: center; gap: 10px; justify-content: center; font-size: 10px; color: var(--primary); }
-#volume { width: 80px; accent-color: var(--primary); cursor: pointer; }
+/* BOTONES ESTILO TERMINAL */
+.btn-link, .btn-contact {
+    background: rgba(0, 112, 243, 0.1);
+    border: 1px solid var(--primary);
+    color: #fff; text-transform: uppercase; letter-spacing: 1px;
+    transition: 0.4s; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+}
+.btn-link:hover {
+    background: var(--primary); box-shadow: 0 0 15px var(--primary);
+    transform: skewX(-5deg);
+}
 
-/* MARQUESINA */
-.marquee-footer { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 1px solid var(--primary); padding: 6px; z-index: 2000; }
-.marquee-content { display: inline-block; white-space: nowrap; animation: scroll 25s linear infinite; color: var(--primary); font-size: 11px; font-weight: bold; }
-@keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+/* CENTRADO DE CONTENIDO */
+#main-content {
+    position: fixed; inset: 0; display: flex; justify-content: center; align-items: center;
+    text-align: center; z-index: 5;
+}
+#main-content h1 {
+    font-size: 4rem; font-weight: 900;
+    text-shadow: 0 0 20px var(--primary);
+    animation: glitch 3s infinite;
+}
+@keyframes glitch { 0% { opacity: 1; } 50% { opacity: 0.8; transform: scale(1.02); } 100% { opacity: 1; } }
 
-/* ELEMENTOS DE CONTACTO */
-.contact-section { background: rgba(255,255,255,0.02); border: 1px solid #333; padding: 15px; border-radius: 15px; margin-bottom: 10px; }
-.btn-contact { background: var(--whatsapp); color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; display: inline-block; margin: 5px; font-size: 11px; font-weight: bold; }
-.icon-anim { display: inline-block; animation: float 3s infinite; color: #f1c40f; }
-@keyframes float { 50% { transform: translateY(-8px); } }
-
-/* LOADER Y MODALES */
-#loader { position: fixed; inset: 0; background: #000; z-index: 3000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.modal-hidden, .hidden { display: none !important; }
+.marquee-footer { background: rgba(0,0,0,0.8); border-top: 2px solid var(--primary); }
