@@ -1,55 +1,53 @@
-:root {
-    --primary: #0070f3;
-    --bg: #0a0a0a;
-    --whatsapp: #25d366;
+:root { --primary: #0070f3; --bg: #0a0a0a; --whatsapp: #25d366; }
+
+body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; overflow: hidden; height: 100vh; }
+
+/* MARQUESINA ANIMADA */
+.marquee-footer {
+    position: fixed; bottom: 0; width: 100%; background: rgba(0,0,0,0.95);
+    border-top: 1px solid var(--primary); padding: 8px 0; z-index: 2000;
 }
-
-body {
-    background-color: var(--bg);
-    color: white;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    margin: 0;
-    height: 100vh;
-    overflow: hidden;
+.marquee-content {
+    display: inline-block; white-space: nowrap; font-size: 11px;
+    color: var(--primary); font-weight: bold;
+    animation: marquee-scroll 25s linear infinite;
 }
+@keyframes marquee-scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-/* PANEL FLOTANTE */
-#panel {
-    position: absolute; top: 30px; left: 30px; width: 280px;
-    background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(10px);
-    border: 1px solid #333; border-radius: 20px; padding: 20px;
-    z-index: 1000; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+/* CHECKBOX BRILLANTE */
+.checkbox-container { display: flex; align-items: center; gap: 10px; cursor: pointer; color: #888; margin: 20px 0; }
+.checkbox-container input { display: none; }
+.checkmark { width: 22px; height: 22px; border: 2px solid #333; border-radius: 6px; position: relative; transition: 0.3s; }
+.checkbox-container input:checked + .checkmark { 
+    background: var(--primary); border-color: var(--primary); 
+    box-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary);
 }
+.checkmark:after { content: "✓"; position: absolute; left: 5px; top: -2px; color: white; display: none; }
+.checkbox-container input:checked + .checkmark:after { display: block; }
 
-#panel.mini { width: 140px; padding: 12px; }
-#panel.mini #welcome-txt, #panel.mini #nav-menu { display: none; }
-#panel.mini .avatar { width: 45px; height: 45px; }
+/* ICONOS ANIMADOS 🌙⭐ */
+.icon-anim { display: inline-block; animation: float 3s ease-in-out infinite; color: #f1c40f; font-size: 1.2rem; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-#panel-header { background: #222; padding: 6px; border-radius: 8px; font-size: 9px; text-align: center; cursor: move; margin-bottom: 15px; color: #888; }
+/* LOADER Y MODALES */
+#loader { position: fixed; inset: 0; background: #000; z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.loader-text span { display: inline-block; color: var(--primary); font-size: 1.5rem; animation: zigzag 1.5s infinite; }
+@keyframes zigzag { 50% { transform: translateY(-15px); } }
 
-.avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--primary); transition: 0.3s; }
+.modal-content { background: #000; border: 1px solid var(--primary); padding: 25px; border-radius: 20px; max-width: 450px; text-align: center; }
+.terms-body { text-align: left; font-size: 12px; color: #aaa; max-height: 250px; overflow-y: auto; margin: 15px 0; line-height: 1.6; }
 
-.button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
+/* SECCIONES DE CONTACTO */
+.contact-section { background: rgba(255,255,255,0.02); border: 1px solid #222; padding: 15px; border-radius: 12px; margin-bottom: 12px; }
+.contact-section h3 { font-size: 10px; color: var(--primary); letter-spacing: 1px; margin-bottom: 8px; }
+.btn-contact { background: var(--whatsapp); color: white; text-decoration: none; padding: 7px 12px; border-radius: 6px; font-size: 10px; display: inline-block; margin: 3px; font-weight: bold; transition: 0.3s; }
+.btn-contact:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); }
 
-.btn-link { background: #1e1e1e; color: white; text-decoration: none; padding: 10px; border-radius: 8px; font-size: 11px; text-align: center; border: 1px solid #333; }
-.btn-link:hover { background: var(--primary); border-color: var(--primary); }
-
-/* AUDIO */
-.audio-player { background: #000; border-radius: 12px; padding: 12px; position: relative; }
-#visualizer { width: 100%; height: 30px; margin: 5px 0; }
-.volume-container { position: absolute; right: -25px; bottom: 5px; }
-input[type=range][orient=vertical] { appearance: slider-vertical; width: 8px; height: 60px; }
-
-/* CONTENIDO CENTRAL */
-#main-content { display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center; padding: 40px; }
-.content-wrapper h1 { color: var(--primary); font-size: 2.5rem; margin-bottom: 15px; }
-.content-wrapper p { color: #aaa; margin-bottom: 30px; }
-
-/* BOTONES EXTERNOS Y CONTACTOS */
-.button-group, .mini-panel-contacts { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 15px; }
-.btn-external { background: var(--primary); color: white; text-decoration: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; transition: 0.3s; }
-.btn-contact { background: var(--whatsapp); color: white; text-decoration: none; padding: 10px 18px; border-radius: 10px; font-size: 12px; transition: 0.3s; border: 1px solid rgba(0,0,0,0.2); }
-.contact-section { margin-top: 25px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; border: 1px solid #222; }
-.contact-section h3 { font-size: 0.8rem; letter-spacing: 2px; color: var(--primary); margin-bottom: 12px; }
-.btn-external:hover, .btn-contact:hover { transform: translateY(-3px); filter: brightness(1.2); }
+/* PANEL MÓVIL Y MAPA */
+#panel { position: absolute; top: 20px; left: 20px; width: 260px; background: rgba(15,15,15,0.9); backdrop-filter: blur(10px); border: 1px solid #333; border-radius: 20px; padding: 20px; z-index: 1000; }
+#panel.mini { width: 120px; height: 40px; overflow: hidden; }
+.button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.btn-link { background: #111; color: white; text-decoration: none; font-size: 9px; padding: 10px; border-radius: 8px; border: 1px solid #222; text-align: center; }
+#user-map { width: 100%; height: 180px; border-radius: 12px; margin-top: 10px; }
+.leaflet-tile { filter: invert(100%) hue-rotate(180deg) brightness(95%); }
+.modal-hidden, .hidden { display: none !important; }
