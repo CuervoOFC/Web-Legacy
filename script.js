@@ -1,6 +1,6 @@
 // --- CONFIGURACIÓN DE AUDIO ---
 const playlist = [
-    { name: "NEBULA DRIVE", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+    { name: "BAIXO", url: "https://files.catbox.moe/895vxi" },
     { name: "CYBER PROTOCOL", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" },
     { name: "DEEP SPACE", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3" }
 ];
