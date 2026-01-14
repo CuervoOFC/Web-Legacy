@@ -1,85 +1,39 @@
-// --- ACCESO Y SEGURIDAD ---
-const spans = document.querySelectorAll('.loader-text span');
-spans.forEach((s, i) => s.style.animationDelay = (i * 0.1) + 's');
+:root { --primary: #0070f3; --bg: #0a0a0a; }
 
-const tCheck = document.getElementById('terms-check');
-const tPanel = document.getElementById('terms-panel');
+body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; overflow: hidden; height: 100vh; }
 
-document.getElementById('btn-read-terms').onclick = () => tPanel.classList.remove('modal-hidden');
-document.getElementById('btn-close-terms').onclick = () => tPanel.classList.add('modal-hidden');
-document.getElementById('btn-exit-web').onclick = () => {
-    document.getElementById('loader').style.display = 'none';
-    document.getElementById('error-screen').classList.remove('hidden');
-};
+/* CENTRADO TOTAL DEL CONTENIDO */
+#main-content {
+    position: fixed; inset: 0; display: flex; justify-content: center;
+    align-items: center; text-align: center; pointer-events: none;
+}
+.content-wrapper { pointer-events: all; max-width: 600px; padding: 20px; }
 
-document.getElementById('btn-continue').onclick = () => {
-    if (tCheck.checked) {
-        document.getElementById('loader').style.opacity = '0';
-        setTimeout(() => {
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('panel').style.display = 'block';
-            document.getElementById('main-content').style.display = 'flex';
-            setTimeout(() => { 
-                document.getElementById('panel').style.opacity = '1'; 
-                document.getElementById('main-content').style.opacity = '1'; 
-            }, 50);
-            loadContent('/');
-        }, 500);
-    } else { alert("ACCESO DENEGADO: Debe aceptar el deslinde de responsabilidades."); }
-};
+/* IMAGEN REDONDA CON CONTORNO AZUL */
+.avatar-container {
+    width: 100px; height: 100px; margin: 0 auto 15px;
+    border-radius: 50%; border: 3px solid var(--primary);
+    box-shadow: 0 0 15px var(--primary); overflow: hidden;
+}
+.avatar { width: 100%; height: 100%; object-fit: cover; }
 
-// --- CONTENIDO SPA ---
-const contentMap = {
-    '/': '<h1>The Legacy Code</h1><p>Sistema Central Operativo. Protocolo de seguridad v2.0.</p>',
-    '/apikey': '<h1>API KEY</h1><a href="https://api.the-legacy-code.pro/" target="_blank" class="btn-contact" style="background:var(--primary)">Portal Oficial</a>',
-    '/bot': '<h1>SISTEMA BOT</h1><a href="https://bot.the-legacy-code.pro" target="_blank" class="btn-contact" style="background:var(--primary)">Abrir Panel</a>',
-    '/hosting': '<h1>HOSTING</h1><div style="display:flex;gap:5px;"><a href="https://dash.the-legacy-code.pro" target="_blank" class="btn-contact" style="background:var(--primary)">Dash</a><a href="https://panel.the-legacy-code.pro" target="_blank" class="btn-contact" style="background:var(--primary)">Panel</a></div>',
-    '/contactos': `
-        <h1>CONTACTOS Y EQUIPO</h1>
-        <div class="contact-section">
-            <h3>DUEÑOS</h3>
-            <a href="https://wa.me/85295456491" target="_blank" class="btn-contact">ઈ𓅇𝐂𝐮𝐞𝐫𝐯𝐨𝐎𝐅𝐂𓆰ࣩ֟፝𓆪</a>
-            <a href="https://wa.me/51921826291" target="_blank" class="btn-contact">𝐒𝐨𝐲𝐌𝐚𝐲𝐜𝐨𝐥 ᴼᶠⁱᶜⁱᵃˡ</a>
-        </div>
-        <div class="contact-section">
-            <h3>COLABORADORES</h3>
-            <a href="https://wa.me/573133374132" target="_blank" class="btn-contact">Yo Soy Yo</a>
-            <a href="https://wa.me/50493732693" target="_blank" class="btn-contact">ADO (Adonix)</a>
-            <a href="https://wa.me/523142183828" target="_blank" class="btn-contact">OptiShield - OFC</a>
-        </div>
-        <div class="contact-section">
-            <h3>REDES <span class="icon-anim">🌙⭐</span></h3>
-            <a href="https://whatsapp.com/channel/0029VaM09iJ8F2pDE8GCaB3V" target="_blank" class="btn-contact">MOON&STARS CHANNEL</a>
-            <a href="https://chat.whatsapp.com/KxHlg8fxLs8C8ShNFhDmYA" target="_blank" class="btn-contact">MOON&STARS GROUP</a>
-        </div>`
-};
+/* REPRODUCTOR DE AUDIO Y ONDAS */
+.audio-player { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 10px; margin-top: 15px; }
+#visualizer { width: 100%; height: 40px; background: #000; border-radius: 5px; margin: 5px 0; }
+.controls { display: flex; justify-content: center; align-items: center; gap: 10px; }
+.controls button { background: none; border: 1px solid var(--primary); color: white; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; }
+#volume { width: 60px; accent-color: var(--primary); }
 
-async function loadContent(path) {
-    const wrap = document.querySelector('.content-wrapper');
-    if (path === '/user') {
-        wrap.innerHTML = '<h1>Escaneando IP...</h1>';
-        const res = await fetch('https://ipapi.co/json/');
-        const d = await res.json();
-        wrap.innerHTML = `<h1>INFO SESIÓN</h1><div class="user-info-container">IP: ${d.ip}<br>Zona: ${d.timezone}</div><div id="user-map"></div>`;
-        const map = L.map('user-map').setView([d.latitude, d.longitude], 12);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        L.marker([d.latitude, d.longitude]).addTo(map);
-    } else { wrap.innerHTML = contentMap[path] || contentMap['/']; }
+/* PANEL ESTÉTICO */
+#panel { 
+    position: absolute; top: 50%; left: 100px; transform: translateY(-50%); 
+    width: 280px; background: rgba(10,10,10,0.9); border: 1px solid #333; 
+    border-radius: 20px; padding: 20px; text-align: center;
 }
 
-document.querySelectorAll('.btn-link').forEach(btn => {
-    btn.onclick = (e) => {
-        e.preventDefault();
-        const path = btn.getAttribute('href');
-        loadContent(path);
-        document.getElementById('panel').classList.add('mini');
-    };
-});
+/* MARQUESINA Y OTROS (MANTENER) */
+.marquee-footer { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 1px solid var(--primary); padding: 5px; }
+.marquee-content { display: inline-block; white-space: nowrap; animation: scroll 20s linear infinite; font-size: 11px; }
+@keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
 
-// Lógica de Panel Draggable
-const p = document.getElementById('panel'), h = document.getElementById('panel-header');
-let drag = false, ox, oy;
-h.onmousedown = (e) => { drag = true; ox = e.clientX - p.offsetLeft; oy = e.clientY - p.offsetTop; };
-document.onmousemove = (e) => { if (drag) { p.style.left = (e.clientX - ox) + 'px'; p.style.top = (e.clientY - oy) + 'px'; } };
-document.onmouseup = () => drag = false;
-h.onclick = () => p.classList.toggle('mini');
+.modal-hidden, .hidden { display: none !important; }
