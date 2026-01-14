@@ -1,11 +1,12 @@
-                <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Legacy Code | Deep Space</title>
+    <title>The Legacy Code | Deep Space v3.0</title>
     
-    <meta property="og:title" content="The Legacy Code | Official">
+    <meta property="og:title" content="The Legacy Code | Official Portal">
+    <meta property="og:description" content="Protocolo de Seguridad v3.0 Activo. Acceso Restringido.">
     <meta property="og:image" content="https://i.ibb.co/vzB7w2b/legacy-preview.jpg">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -14,13 +15,12 @@
 <body>
 
     <div class="stars"></div>
-    <div class="twinkling"></div>
-    <div class="scanlines"></div>
     <div class="glowing-void"></div>
+    <div class="scanlines"></div>
 
     <div class="marquee-footer">
         <div class="marquee-content">
-            © Derechos Reservados Por **The Legacy Code** | Colaboración con **Cuervo-Team-Supreme** & **SoyMaycolOficial** | Protocolo Espacial v3.0 | Deslinde de responsabilidad activo.
+            © DERECHOS RESERVADOS POR **THE LEGACY CODE** | EN COLABORACIÓN CON **CUERVO-TEAM-SUPREME** & **SOYMAYCOLOFICIAL** — ADVERTENCIA: THE LEGACY CODE Y COLABORADORES NO SE HACEN CARGO DE ACCIDENTES O PROBLEMAS QUE TENGA EL USUARIO.
         </div>
     </div>
 
@@ -29,38 +29,51 @@
         <div class="loader-text">
             <span>L</span><span>E</span><span>G</span><span>A</span><span>C</span><span>Y</span>
         </div>
+
         <div class="access-form">
+            <h3 style="color: var(--primary); font-size: 14px; margin-bottom: 10px;">AUTENTICACIÓN REQUERIDA</h3>
             <label class="checkbox-container">
                 <input type="checkbox" id="terms-check">
                 <span class="checkmark"></span>
-                Aceptar Protocolos y Responsabilidades
+                Acepto Protocolos y Deslinde de Responsabilidades
             </label>
             <div class="access-buttons">
-                <button id="btn-read-terms" class="btn-secondary">Términos</button>
-                <button id="btn-continue" class="btn-primary">Entrar</button>
+                <button id="btn-read-terms" class="btn-secondary">Leer Términos</button>
+                <button id="btn-continue" class="btn-primary">Conectar</button>
             </div>
         </div>
-        
+
         <div id="terms-panel" class="modal-hidden">
             <div class="modal-content">
-                <h2>ADVERTENCIA DE SEGURIDAD</h2>
+                <h2>TÉRMINOS Y CONDICIONES</h2>
                 <div class="terms-body">
-                    <p>Accediendo a la red privada de **The Legacy Code**. Los desarrolladores no se responsabilizan por daños colaterales o errores de hardware.</p>
+                    <p><strong>1. SEGURIDAD:</strong> Este sistema opera bajo protocolos de cifrado local.</p>
+                    <p><strong>2. RESPONSABILIDAD:</strong> **The Legacy Code** y sus colaboradores (Cuervo, SoyMaycol, ADO, etc.) quedan exentos de toda responsabilidad legal por daños técnicos, accidentes personales o mal uso de la información por parte del usuario.</p>
+                    <p><strong>3. COLABORADORES:</strong> Créditos a Yo Soy Yo, OptiShield y ADO por el soporte técnico.</p>
                 </div>
-                <button id="btn-close-terms" class="btn-secondary">Cerrar</button>
+                <div class="modal-footer">
+                    <button id="btn-close-terms" class="btn-secondary">Cerrar</button>
+                    <button id="btn-exit-web" class="btn-danger">Salir</button>
+                </div>
             </div>
         </div>
     </div>
 
+    <div id="error-screen" class="hidden">
+        <h1>403: ACCESO DENEGADO</h1>
+        <p>Debe aceptar el deslinde de responsabilidades para entrar.</p>
+    </div>
+
     <div id="panel" class="draggable" style="display: none; opacity: 0;">
-        <div id="panel-header">:: LEGACY CORE ::</div>
+        <div id="panel-header">:: CONTROL CORE ::</div>
         <div class="panel-body">
             <div class="profile-section">
                 <div class="avatar-container">
                     <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="avatar">
                 </div>
-                <h2 id="welcome-txt">Conectado</h2>
+                <h2 id="welcome-txt">Bienvenido</h2>
             </div>
+            
             <nav id="nav-menu" class="button-grid">
                 <a href="/" class="btn-link">INICIO</a>
                 <a href="/user" class="btn-link">MI INFO</a>
@@ -71,9 +84,15 @@
             </nav>
 
             <div class="audio-player">
+                <div class="track-info"><span id="song-name">Sistema Activo</span></div>
                 <canvas id="visualizer"></canvas>
                 <div class="controls">
+                    <button id="prev">«</button>
                     <button id="play-pause">▶</button>
+                    <button id="next">»</button>
+                </div>
+                <div class="vol-box">
+                    <span>VOL</span>
                     <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
                 </div>
             </div>
@@ -81,7 +100,8 @@
     </div>
 
     <main id="main-content" style="display: none; opacity: 0;">
-        <div class="content-wrapper"></div>
+        <div class="content-wrapper">
+            </div>
     </main>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
