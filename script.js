@@ -86,14 +86,14 @@ function renderWaves() {
 
 // --- NAVEGACIÓN SPA Y CONTENIDO ---
 const contentMap = {
-    '/': '<h1>LEGACY CORE</h1><p>V3.0 DEEP SPACE SYSTEM ONLINE</p>',
-    '/apikey': '<h1>API KEY</h1><p>Acceso a llaves de cifrado.</p><a href="https://api.the-legacy-code.pro" target="_blank" class="btn-link" style="display:inline-block; margin-top:15px; padding: 10px 40px;">APIKEY</a>',
-    '/bot': '<h1>BOT SYSTEM</h1><p>Automatización legacy activa.</p><a href="https://bot.the-legacy-code.pro" target="_blank" class="btn-link" style="display:inline-block; margin-top:15px;">BOT PORTAL</a>',
+    '/': '<h1>THE LEGACY CODE - WEB</h1><p>THE LEGACY CODE -WEB UNA WEB PARA ENCONTRAR MAS FACIL NUESTRAS PAGINAS Y CONTACTOS O REDES</p>',
+    '/apikey': '<h1>API KEY</h1><p>Acceso a la apikey The-Legacy-Code.</p><a href="https://api.the-legacy-code.pro" target="_blank" class="btn-link" style="display:inline-block; margin-top:15px; padding: 10px 40px;">APIKEY</a>',
+    '/bot': '<h1>BOT SYSTEM</h1><p>Bot (yakusa) y subbots editables en nuestra web.</p><a href="https://bot.the-legacy-code.pro" target="_blank" class="btn-link" style="display:inline-block; margin-top:15px;">BOT PORTAL</a>',
     '/hosting': `<h1>HOSTING & DASHBOARD</h1><div class="contacts-grid">
         <div class="mini-panel"><h3>DASH</h3><a href="https://dash.the-legacy-code.pro" target="_blank" class="btn-contact">IR AL DASH</a></div>
         <div class="mini-panel"><h3>PANEL</h3><a href="https://panel.the-legacy-code.pro" target="_blank" class="btn-contact">IR AL PANEL</a></div>
     </div>`,
-    '/contactos': `<h1>RED NEURAL</h1><div class="contacts-grid">
+    '/contactos': `<h1>CONTACTOS & REDES</h1><div class="contacts-grid">
         <div class="mini-panel"><h3>DUEÑOS</h3>
             <a href="https://wa.me/5016613065" target="_blank" class="btn-contact">ᴛʜᴇᴅᴇᴠɪʟ ⁺⁵⁰¹</a>
             <a href="https://wa.me/85295456491" target="_blank" class="btn-contact">ઈ𓅇𝐂𝐮𝐞𝐫𝐯𝐨𝐎𝐅𝐂𓆰ࣩ֟፝𓆪</a>
