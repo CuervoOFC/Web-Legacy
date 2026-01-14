@@ -3,64 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Legacy Code | Official Portal</title>
-    
-    <meta property="og:title" content="The Legacy Code | Deep Space">
-    <meta property="og:description" content="Sistema Central v3.0 - Protocolo de Seguridad Activo.">
-    <meta property="og:image" content="https://i.ibb.co/vzB7w2b/legacy-preview.jpg">
-
+    <title>The Legacy Code | Deep Space v3.0</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="stars"></div>
     <div class="glowing-void"></div>
     <div class="scanlines"></div>
-
-    <div class="marquee-footer">
-        <div class="marquee-content">
-            © DERECHOS RESERVADOS POR **THE LEGACY CODE** | EN COLABORACIÓN CON **CUERVO-TEAM-SUPREME** & **SOYMAYCOLOFICIAL** — ADVERTENCIA: NO NOS HACEMOS RESPONSABLES POR DAÑOS O MAL USO DEL SISTEMA.
-        </div>
-    </div>
 
     <div id="loader">
         <div class="loader-circle"></div>
         <h1 class="glitch-text">LEGACY OS</h1>
         <div class="access-form">
-            <label class="checkbox-container">
-                <input type="checkbox" id="terms-check">
-                <span class="checkmark"></span>
-                Acepto Protocolos y Deslinde de Responsabilidades
-            </label>
-            <div class="access-buttons">
-                <button id="btn-read-terms" class="btn-secondary">Términos</button>
-                <button id="btn-continue" class="btn-primary">Continuar</button>
-            </div>
+            <p>SISTEMA DE SEGURIDAD ESPACIAL ACTIVO</p>
+            <button id="btn-read-terms" class="btn-primary">LEER PROTOCOLOS</button>
         </div>
 
         <div id="terms-panel" class="modal-hidden">
             <div class="modal-content">
-                <h2>PROTOCOLO LEGAL</h2>
+                <h2>PROTOCOLOS DE ACCESO</h2>
                 <div class="terms-body">
-                    <p>Acceso restringido. Al continuar, usted acepta que **The Legacy Code** y sus colaboradores (Cuervo, SoyMaycol, ADO, Yo Soy Yo) no tienen responsabilidad legal sobre cualquier falla técnica o accidente derivado.</p>
+                    <p><strong>1. PROPIEDAD:</strong> Este sistema es propiedad de THE LEGACY CODE. El uso de APIs y Hosting está sujeto a monitoreo.</p>
+                    <p><strong>2. RESPONSABILIDAD:</strong> Los dueños (TheDevil, CuervoOFC) y colaboradores no se responsabilizan por daños derivados del uso de este portal.</p>
+                    <p><strong>3. TELEMETRÍA:</strong> Al aceptar, autoriza el escaneo de su IP, ubicación, zona horaria y metadatos del navegador.</p>
+                    <p><strong>4. PRIVACIDAD:</strong> No se almacenan datos personales sensibles fuera de la sesión activa.</p>
                 </div>
-                <button id="btn-close-terms" class="btn-secondary">Cerrar</button>
+                <div class="modal-footer">
+                    <button id="btn-decline" class="btn-secondary">SALIR</button>
+                    <button id="btn-accept" class="btn-primary">ACEPTAR Y CONECTAR</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="panel" class="draggable" style="display: none; opacity: 0;">
+    <div id="error-screen" style="display:none;" class="error-bg">
+        <h1>403</h1>
+        <h2>ACCESO DENEGADO</h2>
+        <p>Protocolo rechazado por el usuario.</p>
+        <button onclick="location.reload()" class="btn-primary">REINTENTAR</button>
+    </div>
+
+    <div id="panel" class="draggable" style="display: none;">
         <div id="panel-header">:: CONTROL CORE ::</div>
         <div class="panel-body">
-            <div class="profile-section">
-                <div class="avatar-container">
-                    <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="avatar">
-                </div>
-                <h2 id="welcome-txt">En Línea</h2>
+            <div class="avatar-container">
+                <img src="https://i.pravatar.cc/150?img=11" class="avatar">
             </div>
-            
-            <nav id="nav-menu" class="button-grid">
+            <nav class="button-grid">
                 <a href="/" class="btn-link">INICIO</a>
                 <a href="/user" class="btn-link">MI INFO</a>
                 <a href="/apikey" class="btn-link">API KEY</a>
@@ -68,11 +58,8 @@
                 <a href="/hosting" class="btn-link">HOSTING</a>
                 <a href="/contactos" class="btn-link">CONTACTOS</a>
             </nav>
-
             <div class="audio-player">
-                <div class="track-info">
-                    <span id="song-name">SISTEMA INACTIVO</span>
-                </div>
+                <span id="song-name">ESPERANDO...</span>
                 <canvas id="visualizer"></canvas>
                 <div class="controls">
                     <button id="prev">«</button>
@@ -84,7 +71,7 @@
         </div>
     </div>
 
-    <main id="main-content" style="display: none; opacity: 0;">
+    <main id="main-content" style="display: none;">
         <div class="content-wrapper"></div>
     </main>
 
