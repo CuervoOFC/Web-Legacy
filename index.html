@@ -1,12 +1,11 @@
-<!DOCTYPE html>
+                <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Legacy Code | Official Portal</title>
+    <title>The Legacy Code | Deep Space</title>
     
-    <meta property="og:title" content="The Legacy Code | Official Portal">
-    <meta property="og:description" content="Sistema Central de Operaciones. Protocolo de Seguridad Activo.">
+    <meta property="og:title" content="The Legacy Code | Official">
     <meta property="og:image" content="https://i.ibb.co/vzB7w2b/legacy-preview.jpg">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -14,53 +13,53 @@
 </head>
 <body>
 
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    <div class="scanlines"></div>
+    <div class="glowing-void"></div>
+
     <div class="marquee-footer">
         <div class="marquee-content">
-            © Derechos Reservados Por **The Legacy Code**, En Colaboración Con **Cuervo-Team-Supreme** & **SoyMaycolOficial** — Acceso Restringido — No nos hacemos responsables de accidentes o daños derivados del uso de este sistema.
+            © Derechos Reservados Por **The Legacy Code** | Colaboración con **Cuervo-Team-Supreme** & **SoyMaycolOficial** | Protocolo Espacial v3.0 | Deslinde de responsabilidad activo.
         </div>
     </div>
 
     <div id="loader">
         <div class="loader-circle"></div>
         <div class="loader-text">
-            <span>C</span><span>a</span><span>r</span><span>g</span><span>a</span><span>n</span><span>d</span><span>o</span><span>.</span><span>.</span><span>.</span>
+            <span>L</span><span>E</span><span>G</span><span>A</span><span>C</span><span>Y</span>
         </div>
         <div class="access-form">
             <label class="checkbox-container">
                 <input type="checkbox" id="terms-check">
                 <span class="checkmark"></span>
-                Acepto Protocolos y Responsabilidades
+                Aceptar Protocolos y Responsabilidades
             </label>
             <div class="access-buttons">
-                <button id="btn-read-terms" class="btn-secondary">Leer Términos</button>
-                <button id="btn-continue" class="btn-primary">Continuar</button>
+                <button id="btn-read-terms" class="btn-secondary">Términos</button>
+                <button id="btn-continue" class="btn-primary">Entrar</button>
             </div>
         </div>
-
+        
         <div id="terms-panel" class="modal-hidden">
             <div class="modal-content">
-                <h2>TÉRMINOS Y RESPONSABILIDADES</h2>
+                <h2>ADVERTENCIA DE SEGURIDAD</h2>
                 <div class="terms-body">
-                    <p><strong>AVISO LEGAL:</strong> **The Legacy Code** y sus **Colaboradores** no se hacen cargo de accidentes, problemas técnicos o daños que el usuario pueda tener al interactuar con esta web o sus herramientas.</p>
-                    <hr>
-                    <p>© Derechos Reservados Por The Legacy Code & Colaboradores.</p>
+                    <p>Accediendo a la red privada de **The Legacy Code**. Los desarrolladores no se responsabilizan por daños colaterales o errores de hardware.</p>
                 </div>
-                <div class="modal-footer">
-                    <button id="btn-close-terms" class="btn-secondary">Cerrar</button>
-                    <button id="btn-exit-web" class="btn-danger">Salir</button>
-                </div>
+                <button id="btn-close-terms" class="btn-secondary">Cerrar</button>
             </div>
         </div>
     </div>
 
     <div id="panel" class="draggable" style="display: none; opacity: 0;">
-        <div id="panel-header">:: THE LEGACY CODE ::</div>
+        <div id="panel-header">:: LEGACY CORE ::</div>
         <div class="panel-body">
             <div class="profile-section">
                 <div class="avatar-container">
                     <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="avatar">
                 </div>
-                <h2 id="welcome-txt">Bienvenido</h2>
+                <h2 id="welcome-txt">Conectado</h2>
             </div>
             <nav id="nav-menu" class="button-grid">
                 <a href="/" class="btn-link">INICIO</a>
@@ -72,15 +71,9 @@
             </nav>
 
             <div class="audio-player">
-                <div class="track-info"><span id="song-name">Pausa</span></div>
                 <canvas id="visualizer"></canvas>
                 <div class="controls">
-                    <button id="prev">«</button>
                     <button id="play-pause">▶</button>
-                    <button id="next">»</button>
-                </div>
-                <div class="vol-box">
-                    <span>vol</span>
                     <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
                 </div>
             </div>
