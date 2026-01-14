@@ -1,108 +1,89 @@
-// --- CONFIGURACIÓN DE AUDIO ---
+const panel = document.getElementById('panel');
 const audio = new Audio();
 const playlist = [
-    { name: "Synthetic Sky", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-    { name: "Digital Ghost", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-    { name: "Cyber Drive", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+    { name: "Electronic Flow", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+    { name: "Cyber Beats", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+    { name: "Digital Night", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
 ];
-let currentSongIndex = 0;
+let currentSong = 0;
 
-function loadSong(index) {
-    audio.src = playlist[index].url;
-    document.getElementById('song-name').innerText = `Sonando: ${playlist[index].name}`;
+// --- NAVEGACIÓN POR RUTAS / ---
+const contentMap = {
+    '/apikey': '<h1>API Keys</h1><p>Gestiona tus tokens de acceso seguro.</p>',
+    '/bot': '<h1>Bot de Sistema</h1><p>Panel de control del bot automático.</p>',
+    '/hosting': '<h1>Hosting</h1><p>Estado del servidor: Operativo.</p>',
+    '/contactos': '<h1>Contactos</h1><p>Soporte disponible 24/7.</p>'
+};
+
+document.querySelectorAll('.btn-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const path = link.getAttribute('href');
+        window.history.pushState({}, '', path);
+        
+        // Cambiar contenido y MINIMIZAR panel
+        document.querySelector('.content-wrapper').innerHTML = contentMap[path];
+        panel.classList.add('mini');
+    });
+});
+
+// Volver a ampliar al tocar el header
+document.getElementById('panel-header').onclick = () => panel.classList.toggle('mini');
+
+// --- LÓGICA DE AUDIO ---
+function loadSong(idx) {
+    audio.src = playlist[idx].url;
+    document.getElementById('song-name').innerText = playlist[idx].name;
 }
 
-loadSong(currentSongIndex);
-
-// Reproducir al primer clic en la web
 document.addEventListener('click', () => {
     if (audio.paused) {
+        loadSong(Math.floor(Math.random() * playlist.length));
         audio.play();
-        document.getElementById('play-pause').innerText = "Pause";
+        document.getElementById('play-pause').innerText = "||";
     }
 }, { once: true });
 
-document.getElementById('play-pause').addEventListener('click', (e) => {
+document.getElementById('play-pause').onclick = (e) => {
     e.stopPropagation();
-    if (audio.paused) {
-        audio.play();
-        e.target.innerText = "Pause";
-    } else {
-        audio.pause();
-        e.target.innerText = "Play";
-    }
-});
+    if (audio.paused) { audio.play(); e.target.innerText = "||"; }
+    else { audio.pause(); e.target.innerText = "▶"; }
+};
 
-document.getElementById('next').addEventListener('click', (e) => {
-    e.stopPropagation();
-    currentSongIndex = (currentSongIndex + 1) % playlist.length;
-    loadSong(currentSongIndex);
-    audio.play();
-});
+document.getElementById('next').onclick = () => {
+    currentSong = (currentSong + 1) % playlist.length;
+    loadSong(currentSong); audio.play();
+};
 
-document.getElementById('prev').addEventListener('click', (e) => {
-    e.stopPropagation();
-    currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
-    loadSong(currentSongIndex);
-    audio.play();
-});
+document.getElementById('volume').oninput = (e) => audio.volume = e.target.value;
 
-document.getElementById('volume').addEventListener('input', (e) => {
-    audio.volume = e.target.value;
-});
-
-// --- VISUALIZADOR (OLAS) ---
+// --- VISUALIZADOR DE ONDAS ---
 const canvas = document.getElementById('visualizer');
 const ctx = canvas.getContext('2d');
-
 function draw() {
     requestAnimationFrame(draw);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!audio.paused) {
         ctx.fillStyle = '#0070f3';
         for (let i = 0; i < canvas.width; i += 4) {
-            const h = Math.random() * 25; 
+            const h = Math.random() * 20 + 5;
             ctx.fillRect(i, canvas.height - h, 2, h);
         }
     }
 }
 draw();
 
-// --- PANEL MOVIBLE (DRAGGABLE) ---
-const panel = document.getElementById('panel');
-const header = document.getElementById('panel-header');
-let isDragging = false;
-let startX, startY;
-
-header.onmousedown = (e) => {
+// --- MOVIMIENTO DEL PANEL ---
+let isDragging = false, startX, startY;
+document.getElementById('panel-header').onmousedown = (e) => {
     isDragging = true;
     startX = e.clientX - panel.offsetLeft;
     startY = e.clientY - panel.offsetTop;
 };
-
 document.onmousemove = (e) => {
-    if (!isDragging) return;
-    panel.style.left = (e.clientX - startX) + 'px';
-    panel.style.top = (e.clientY - startY) + 'px';
+    if (isDragging) {
+        panel.style.left = (e.clientX - startX) + 'px';
+        panel.style.top = (e.clientY - startY) + 'px';
+    }
 };
-
 document.onmouseup = () => isDragging = false;
-
-// --- NAVEGACIÓN SPA ---
-const pages = {
-    'apikey': '<h1>API Key</h1><p>Gestiona tus claves de acceso seguro aquí.</p>',
-    'bot': '<h1>Bot de Sistema</h1><p>Configura las respuestas y comandos del bot.</p>',
-    'hosting': '<h1>Hosting</h1><p>Servidores activos: 99.9% uptime.</p>',
-    'contactos': '<h1>Contactos</h1><p>Escríbenos a soporte@tudominio.com</p>'
-};
-
-function navigate(event, route) {
-    event.preventDefault();
-    window.history.pushState({}, '', `/${route}`);
-    document.getElementById('main-content').innerHTML = `<div class="hero">${pages[route]}</div>`;
-}
-
-window.onpopstate = () => {
-    const route = window.location.pathname.replace('/', '');
-    if(pages[route]) document.getElementById('main-content').innerHTML = `<div class="hero">${pages[route]}</div>`;
-};
