@@ -7,30 +7,55 @@ const playlist = [
 ];
 let currentSong = 0;
 
-// --- NAVEGACIÓN POR RUTAS / ---
 const contentMap = {
-    '/apikey': '<h1>API Keys</h1><p>Gestiona tus tokens de acceso seguro.</p>',
-    '/bot': '<h1>Bot de Sistema</h1><p>Panel de control del bot automático.</p>',
-    '/hosting': '<h1>Hosting</h1><p>Estado del servidor: Operativo.</p>',
-    '/contactos': '<h1>Contactos</h1><p>Soporte disponible 24/7.</p>'
+    '/apikey': `
+        <h1>API KEY</h1>
+        <p>Gestiona tus credenciales y accede a nuestra documentación técnica.</p>
+        <a href="https://api.the-legacy-code.pro/" target="_blank" class="btn-external">Ir a la API Oficial</a>`,
+    '/bot': `
+        <h1>SISTEMA BOT</h1>
+        <p>Configura las funciones de tu bot en tiempo real.</p>
+        <a href="https://bot.the-legacy-code.pro" target="_blank" class="btn-external">Abrir Panel del Bot</a>`,
+    '/hosting': `
+        <h1>HOSTING SERVICES</h1>
+        <p>Gestiona tus servidores desde nuestros paneles de control.</p>
+        <div class="button-group">
+            <a href="https://dash.the-legacy-code.pro" target="_blank" class="btn-external">Ir al Dashboard</a>
+            <a href="https://panel.the-legacy-code.pro" target="_blank" class="btn-external">Ir al Panel</a>
+        </div>`,
+    '/contactos': `
+        <h1>CONTACTOS</h1>
+        <p>Contactos De Los Dueños y soporte</p>
+        <div class="contact-section">
+            <h3>DUEÑOS</h3>
+            <div class="mini-panel-contacts">
+                <a href="https://wa.me/85295456491" target="_blank" class="btn-contact">ઈ𓅇𝐂𝐮𝐞𝐫𝐯𝐨𝐎𝐅𝐂𓆰ࣩ֟፝𓆪</a>
+                <a href="https://wa.me/5016613065" target="_blank" class="btn-contact">ᴛʜᴇᴅᴇ訂ɪʟ ⁺⁵⁰¹</a>
+            </div>
+        </div>
+        <div class="contact-section">
+            <h3>SOPORTE</h3>
+            <div class="mini-panel-contacts">
+                <a href="https://wa.me/31651131184" target="_blank" class="btn-contact">ઈ𓅇𝐂𝐮𝐞𝐫𝐯𝐨𝐒𝐮𝐩𝐩𝐨𝐫𝐭𝐎𝐅𝐂𓆰ࣩ֟፝𓆪</a>
+                <a href="https://wa.me/51921826291" target="_blank" class="btn-contact">𝐒𝐨𝐲𝐌𝐚𝐲𝐜𝐨𝐥 ᴼᶠⁱᶜⁱᵃˡ</a>
+            </div>
+        </div>`
 };
 
+// NAVEGACIÓN SPA
 document.querySelectorAll('.btn-link').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         const path = link.getAttribute('href');
         window.history.pushState({}, '', path);
-        
-        // Cambiar contenido y MINIMIZAR panel
-        document.querySelector('.content-wrapper').innerHTML = contentMap[path];
+        document.querySelector('.content-wrapper').innerHTML = contentMap[path] || '<h1>Bienvenido</h1>';
         panel.classList.add('mini');
     });
 });
 
-// Volver a ampliar al tocar el header
 document.getElementById('panel-header').onclick = () => panel.classList.toggle('mini');
 
-// --- LÓGICA DE AUDIO ---
+// AUDIO ALEATORIO
 function loadSong(idx) {
     audio.src = playlist[idx].url;
     document.getElementById('song-name').innerText = playlist[idx].name;
@@ -50,14 +75,15 @@ document.getElementById('play-pause').onclick = (e) => {
     else { audio.pause(); e.target.innerText = "▶"; }
 };
 
-document.getElementById('next').onclick = () => {
+document.getElementById('next').onclick = (e) => {
+    e.stopPropagation();
     currentSong = (currentSong + 1) % playlist.length;
     loadSong(currentSong); audio.play();
 };
 
 document.getElementById('volume').oninput = (e) => audio.volume = e.target.value;
 
-// --- VISUALIZADOR DE ONDAS ---
+// VISUALIZADOR
 const canvas = document.getElementById('visualizer');
 const ctx = canvas.getContext('2d');
 function draw() {
@@ -73,7 +99,7 @@ function draw() {
 }
 draw();
 
-// --- MOVIMIENTO DEL PANEL ---
+// MOVIMIENTO
 let isDragging = false, startX, startY;
 document.getElementById('panel-header').onmousedown = (e) => {
     isDragging = true;
