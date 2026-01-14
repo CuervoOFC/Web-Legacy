@@ -1,81 +1,24 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Legacy Code | Deep Space v3.0</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="stars"></div>
-    <div class="glowing-void"></div>
-    <div class="scanlines"></div>
-
-    <div id="loader">
-        <div class="loader-circle"></div>
-        <h1 class="glitch-text">LEGACY OS</h1>
-        <div class="access-form">
-            <p>SISTEMA DE SEGURIDAD ESPACIAL ACTIVO</p>
-            <button id="btn-read-terms" class="btn-primary">LEER PROTOCOLOS</button>
-        </div>
-
-        <div id="terms-panel" class="modal-hidden">
-            <div class="modal-content">
-                <h2>PROTOCOLOS DE ACCESO</h2>
-                <div class="terms-body">
-                    <p><strong>1. PROPIEDAD:</strong> Este sistema es propiedad de THE LEGACY CODE. El uso de APIs y Hosting está sujeto a monitoreo.</p>
-                    <p><strong>2. RESPONSABILIDAD:</strong> Los dueños (TheDevil, CuervoOFC) y colaboradores no se responsabilizan por daños derivados del uso de este portal.</p>
-                    <p><strong>3. TELEMETRÍA:</strong> Al aceptar, autoriza el escaneo de su IP, ubicación, zona horaria y metadatos del navegador.</p>
-                    <p><strong>4. PRIVACIDAD:</strong> No se almacenan datos personales sensibles fuera de la sesión activa.</p>
-                </div>
-                <div class="modal-footer">
-                    <button id="btn-decline" class="btn-secondary">SALIR</button>
-                    <button id="btn-accept" class="btn-primary">ACEPTAR Y CONECTAR</button>
-                </div>
-            </div>
-        </div>
+<div id="panel" class="draggable" style="display: none;">
+    <div id="panel-header-container">
+        <button id="panel-toggle-btn">:: CONTROL CORE ::</button>
     </div>
-
-    <div id="error-screen" style="display:none;" class="error-bg">
-        <h1>403</h1>
-        <h2>ACCESO DENEGADO</h2>
-        <p>Protocolo rechazado por el usuario.</p>
-        <button onclick="location.reload()" class="btn-primary">REINTENTAR</button>
-    </div>
-
-    <div id="panel" class="draggable" style="display: none;">
-        <div id="panel-header">:: CONTROL CORE ::</div>
-        <div class="panel-body">
+    
+    <div class="panel-body">
+        <div class="profile-section">
             <div class="avatar-container">
                 <img src="https://i.pravatar.cc/150?img=11" class="avatar">
             </div>
-            <nav class="button-grid">
-                <a href="/" class="btn-link">INICIO</a>
-                <a href="/user" class="btn-link">MI INFO</a>
-                <a href="/apikey" class="btn-link">API KEY</a>
-                <a href="/bot" class="btn-link">BOT</a>
-                <a href="/hosting" class="btn-link">HOSTING</a>
-                <a href="/contactos" class="btn-link">CONTACTOS</a>
-            </nav>
-            <div class="audio-player">
-                <span id="song-name">ESPERANDO...</span>
-                <canvas id="visualizer"></canvas>
-                <div class="controls">
-                    <button id="prev">«</button>
-                    <button id="play-pause">▶</button>
-                    <button id="next">»</button>
-                </div>
-                <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
-            </div>
+            <p id="status-text">SISTEMA ONLINE</p>
         </div>
-    </div>
-
-    <main id="main-content" style="display: none;">
-        <div class="content-wrapper"></div>
-    </main>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+        
+        <nav class="button-grid">
+            <a href="/" class="btn-link">INICIO</a>
+            <a href="/user" class="btn-link">MI INFO</a>
+            <a href="/apikey" class="btn-link">API KEY</a>
+            <a href="/bot" class="btn-link">BOT</a>
+            <a href="/hosting" class="btn-link">HOSTING</a>
+            <a href="/contactos" class="btn-link">CONTACTOS</a>
+        </nav>
+        
+        </div>
+</div>
