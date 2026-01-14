@@ -1,67 +1,89 @@
-// --- ACCESO ---
-const tCheck = document.getElementById('terms-check');
-document.getElementById('btn-continue').onclick = () => {
-    if (tCheck.checked) {
-        document.getElementById('loader').style.transform = 'translateY(-100%)';
-        setTimeout(() => {
-            document.getElementById('panel').style.display = 'block';
-            document.getElementById('main-content').style.display = 'flex';
-            setTimeout(() => { document.getElementById('panel').style.opacity = '1'; document.getElementById('main-content').style.opacity = '1'; }, 100);
-            initAudio();
-            loadContent('/');
-        }, 600);
-    } else { alert("ACCESO DENEGADO: Acepte términos."); }
-};
+// --- PLAYLIST ALEATORIA ---
+const playlist = [
+    { name: "NEBULA PROTOCOL", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+    { name: "CYBER SPACE", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+    { name: "LEGACY VOID", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+];
 
-// --- AUDIO VISUALIZER ---
-let audio = new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
-let context, analyser, src, canvas, ctx;
+let audio = new Audio();
+let audioContext, analyser, source, canvas, ctx;
 
-function initAudio() {
+function playRandom() {
+    const track = playlist[Math.floor(Math.random() * playlist.length)];
+    audio.src = track.url;
+    document.getElementById('song-name').innerText = track.name;
+    audio.play().catch(() => console.log("Clic requerido para audio"));
+}
+
+// --- VISUALIZADOR DE ONDAS ---
+function startVisualizer() {
     canvas = document.getElementById("visualizer");
     ctx = canvas.getContext("2d");
-    if (!context) {
-        context = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = context.createAnalyser();
-        src = context.createMediaElementSource(audio);
-        src.connect(analyser);
-        analyser.connect(context.destination);
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        source = audioContext.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioContext.destination);
     }
-    draw();
+    renderFrame();
 }
 
-function draw() {
-    requestAnimationFrame(draw);
-    let array = new Uint8Array(analyser.frequencyBinCount);
-    analyser.getByteFrequencyData(array);
+function renderFrame() {
+    requestAnimationFrame(renderFrame);
+    const data = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(data);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < 60; i++) {
-        let h = array[i] / 4;
-        ctx.fillStyle = `rgba(0, 112, 243, ${h/50})`;
-        ctx.fillRect(i * 4, canvas.height - h, 3, h);
+    ctx.fillStyle = "#0070f3";
+    for (let i = 0; i < 50; i++) {
+        let h = data[i] / 4;
+        ctx.fillRect(i * 3, canvas.height - h, 2, h);
     }
 }
 
-document.getElementById('play-pause').onclick = () => audio.paused ? audio.play() : audio.pause();
-document.getElementById('volume').oninput = (e) => audio.volume = e.target.value;
-
-// --- SPA CONTENT ---
+// --- NAVEGACIÓN SPA ---
 const contentMap = {
-    '/': '<h1>LEGACY OS</h1><p>SISTEMA OPERATIVO EN LINEA</p>',
-    '/contactos': `<h1>RED NEURAL</h1><div class="contact-section"><h3>DUEÑOS</h3><a href="https://wa.me/85295456491" class="btn-contact">CUERVO</a></div><div class="contact-section"><h3>COLABORADORES</h3><a href="https://wa.me/573133374132" class="btn-contact">YO SOY YO</a></div>`
+    '/': '<h1>LEGACY CORE</h1><p>SISTEMA v3.0 ONLINE</p>',
+    '/contactos': '<h1>CONTACTOS</h1><div class="contact-section"><a href="https://wa.me/85295456491" class="btn-link">CUERVO</a><a href="https://wa.me/51921826291" class="btn-link">SOYMAYCOL</a></div>'
 };
 
 async function loadContent(path) {
-    document.querySelector('.content-wrapper').innerHTML = contentMap[path] || contentMap['/'];
+    const wrap = document.querySelector('.content-wrapper');
+    if (path === '/user') {
+        wrap.innerHTML = '<h1>ESCANEANDO...</h1>';
+        const res = await fetch('https://ipapi.co/json/');
+        const d = await res.json();
+        wrap.innerHTML = `<h1>MI INFO</h1><p>IP: ${d.ip}</p><p>PAIS: ${d.country_name}</p>`;
+    } else {
+        wrap.innerHTML = contentMap[path] || contentMap['/'];
+    }
+    wrap.style.opacity = '1';
 }
 
+// --- EVENTOS ---
+document.getElementById('btn-continue').onclick = () => {
+    if (document.getElementById('terms-check').checked) {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('panel').style.display = 'block';
+        document.getElementById('main-content').style.display = 'flex';
+        document.getElementById('panel').style.opacity = '1';
+        document.getElementById('main-content').style.opacity = '1';
+        startVisualizer();
+        playRandom();
+        loadContent('/');
+    } else { alert("Acepta los términos."); }
+};
+
+document.getElementById('btn-read-terms').onclick = () => document.getElementById('terms-panel').classList.remove('modal-hidden');
+document.getElementById('btn-close-terms').onclick = () => document.getElementById('terms-panel').classList.add('modal-hidden');
+
+document.getElementById('panel-header').onclick = () => document.getElementById('panel').classList.toggle('mini');
+
 document.querySelectorAll('.btn-link').forEach(btn => {
-    btn.onclick = (e) => { e.preventDefault(); loadContent(btn.getAttribute('href')); }
+    btn.onclick = (e) => { e.preventDefault(); loadContent(btn.getAttribute('href')); };
 });
 
-// Draggable
-const panel = document.getElementById('panel'), header = document.getElementById('panel-header');
-let drag = false, ox, oy;
-header.onmousedown = (e) => { drag = true; ox = e.clientX - panel.offsetLeft; oy = e.clientY - panel.offsetTop; };
-document.onmousemove = (e) => { if (drag) { panel.style.left = (e.clientX - ox) + 'px'; panel.style.top = (e.clientY - oy) + 'px'; } };
-document.onmouseup = () => drag = false;
+document.getElementById('play-pause').onclick = () => audio.paused ? audio.play() : audio.pause();
+document.getElementById('next').onclick = () => playRandom();
+document.getElementById('prev').onclick = () => playRandom();
+document.getElementById('volume').oninput = (e) => audio.volume = e.target.value;
