@@ -1,6 +1,6 @@
 // --- CONFIGURACIÓN DE AUDIO ---
 const playlist = [
-    { name: "BAIXO", url: "https://files.catbox.moe/895vxi" },
+    { name: "BAIXO", url: "https://files.cloudkuimages.guru/audios/3d5237ae57d8.mp3" },
     { name: "CYBER CORE", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" },
     { name: "DEEP SPACE", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3" }
 ];
