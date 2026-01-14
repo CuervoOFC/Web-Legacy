@@ -3,15 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>The Legacy Code | Official Portal</title>
-    <meta name="title" content="The Legacy Code | Official Portal">
-    <meta name="description" content="Sistema Central de Operaciones. Seguridad y Hosting. En Colaboración con Cuervo-Team-Supreme & SoyMaycolOficial.">
-
-    <meta property="og:type" content="website">
+    
     <meta property="og:title" content="The Legacy Code | Official Portal">
-    <meta property="og:description" content="Protocolo de Seguridad v2.0 Activo. Acceso restringido.">
-    <meta property="og:image" content="https://i.ibb.co/vzB7w2b/legacy-preview.jpg"> <link rel="icon" type="image/x-icon" href="https://i.pravatar.cc/32?img=11">
+    <meta property="og:description" content="Sistema Central de Operaciones. Protocolo de Seguridad Activo.">
+    <meta property="og:image" content="https://i.ibb.co/vzB7w2b/legacy-preview.jpg">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
@@ -20,7 +16,7 @@
 
     <div class="marquee-footer">
         <div class="marquee-content">
-            © Derechos Reservados Por **The Legacy Code**, En Colaboración Con **Cuervo-Team-Supreme** & **SoyMaycolOficial** — Protocolo de Seguridad v2.0 Activo — Acceso Restringido — 
+            © Derechos Reservados Por **The Legacy Code**, En Colaboración Con **Cuervo-Team-Supreme** & **SoyMaycolOficial** — Acceso Restringido — 
         </div>
     </div>
 
@@ -29,7 +25,6 @@
         <div class="loader-text">
             <span>C</span><span>a</span><span>r</span><span>g</span><span>a</span><span>n</span><span>d</span><span>o</span><span>.</span><span>.</span><span>.</span>
         </div>
-
         <div class="access-form">
             <label class="checkbox-container">
                 <input type="checkbox" id="terms-check">
@@ -46,13 +41,9 @@
             <div class="modal-content">
                 <h2>TÉRMINOS Y RESPONSABILIDADES</h2>
                 <div class="terms-body">
-                    <p><strong>1. Privacidad:</strong> Lectura técnica de IP local para optimización del sistema. No se guardan registros.</p>
-                    <p><strong>2. Seguridad:</strong> Recomendamos el uso de una VPN activa para mayor anonimato.</p>
-                    <p><strong>3. DESLINDE DE RESPONSABILIDAD:</strong> **The Legacy Code** y sus **Colaboradores** no se hacen responsables de accidentes, fallos técnicos, daños a dispositivos o cualquier problema derivado del mal uso de este portal por parte del usuario. El acceso es bajo su total responsabilidad.</p>
+                    <p><strong>DESLINDE:</strong> **The Legacy Code** y sus **Colaboradores** no se hacen responsables de problemas técnicos o daños. El acceso es bajo su propio riesgo.</p>
                     <hr>
-                    <p style="font-size: 10px; color: var(--primary); text-align: center;">
-                        © DERECHOS RESERVADOS POR THE LEGACY CODE EN COLABORACIÓN CON CUERVO-TEAM-SUPREME & SOYMAYCOLOFICIAL
-                    </p>
+                    <p>© THE LEGACY CODE & CO.</p>
                 </div>
                 <div class="modal-footer">
                     <button id="btn-close-terms" class="btn-secondary">Cerrar</button>
@@ -64,16 +55,18 @@
 
     <div id="error-screen" class="hidden">
         <h1>ERROR 403: ACCESO DENEGADO</h1>
-        <p>No se puede acceder al sistema sin aceptar el deslinde de responsabilidades.</p>
     </div>
 
     <div id="panel" class="draggable" style="display: none; opacity: 0;">
         <div id="panel-header">:: THE LEGACY CODE ::</div>
         <div class="panel-body">
             <div class="profile-section">
-                <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="avatar">
+                <div class="avatar-container">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="avatar">
+                </div>
                 <h2 id="welcome-txt">Bienvenido</h2>
             </div>
+            
             <nav id="nav-menu" class="button-grid">
                 <a href="/" class="btn-link">INICIO</a>
                 <a href="/user" class="btn-link">MI INFO</a>
@@ -82,12 +75,17 @@
                 <a href="/hosting" class="btn-link">HOSTING</a>
                 <a href="/contactos" class="btn-link">CONTACTOS</a>
             </nav>
+
             <div class="audio-player">
                 <div class="track-info"><span id="song-name">Pausa</span></div>
                 <canvas id="visualizer"></canvas>
                 <div class="controls">
+                    <button id="prev">«</button>
                     <button id="play-pause">▶</button>
                     <button id="next">»</button>
+                    <div class="volume-container">
+                        <input type="range" id="volume" min="0" max="1" step="0.1">
+                    </div>
                 </div>
             </div>
         </div>
