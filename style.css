@@ -1,87 +1,102 @@
 :root { 
     --primary: #0070f3; 
     --glow: rgba(0, 112, 243, 0.6);
-    --bg: #00020a; 
+    --bg: #00050a; 
 }
 
 body { 
     background: var(--bg); 
     color: white; 
-    font-family: 'Courier New', Courier, monospace; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0; 
     overflow: hidden; 
     height: 100vh;
 }
 
-/* EFECTO ESTRELLAS */
-.stars, .twinkling {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; display: block;
-}
+/* FONDO DE ESTRELLAS CON CSS PURO (No se rompe) */
 .stars {
-    background: #000 url(https://i.ibb.co/Y7p2p0M/stars.png) repeat top center;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
     z-index: -3;
+    background: radial-gradient(1px 1px at 20px 30px, #eee, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 130px 80px, #fff, rgba(0,0,0,0));
+    background-size: 200px 200px;
+    animation: moveStars 100s linear infinite;
 }
-.twinkling {
-    background: transparent url(https://i.ibb.co/S7Vn5h6/twinkling.png) repeat top center;
-    z-index: -2;
-    animation: move-twink-back 200s linear infinite;
-}
-@keyframes move-twink-back { from {background-position:0 0;} to {background-position:-10000px 5000px;} }
 
-/* EFECTO NEBULOSA */
+@keyframes moveStars {
+    from { background-position: 0 0; }
+    to { background-position: 1000px 1000px; }
+}
+
+/* NEBULOSA CENTRAL */
 .glowing-void {
-    position: fixed; top: 50%; left: 50%; width: 600px; height: 600px;
+    position: fixed; top: 50%; left: 50%; width: 80vw; height: 80vw;
     background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
-    transform: translate(-50%, -50%); filter: blur(80px); opacity: 0.3; z-index: -1;
+    transform: translate(-50%, -50%); filter: blur(60px); opacity: 0.2; z-index: -2;
 }
 
-/* SCANLINES (Líneas de TV vieja) */
+/* SCANLINES TÉCNICOS */
 .scanlines {
     position: fixed; inset: 0; width: 100%; height: 100%;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    background-size: 100% 4px, 3px 100%; pointer-events: none; z-index: 10;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+    background-size: 100% 4px; pointer-events: none; z-index: 10;
 }
 
-/* PANEL GLASSMORPHISM */
-#panel {
-    background: rgba(0, 5, 15, 0.85);
-    backdrop-filter: blur(15px);
-    border: 1px solid var(--primary);
-    box-shadow: 0 0 30px var(--glow), inset 0 0 15px var(--glow);
-    border-radius: 0 20px 0 20px; /* Estilo futurista */
+/* LOADER Y ACCESO (Corregido el desorden de la captura) */
+#loader {
+    position: fixed; inset: 0; background: black; z-index: 9999;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 20px; text-align: center;
 }
 
-/* IMAGEN DE PERFIL NEÓN */
-.avatar-container {
-    width: 100px; height: 100px; margin: 0 auto;
-    border-radius: 50%; border: 2px solid var(--primary);
-    box-shadow: 0 0 20px var(--primary); position: relative;
-    padding: 5px; background: rgba(0,0,0,0.5);
-}
-
-/* BOTONES ESTILO TERMINAL */
-.btn-link, .btn-contact {
+.access-form {
     background: rgba(0, 112, 243, 0.1);
     border: 1px solid var(--primary);
-    color: #fff; text-transform: uppercase; letter-spacing: 1px;
-    transition: 0.4s; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-}
-.btn-link:hover {
-    background: var(--primary); box-shadow: 0 0 15px var(--primary);
-    transform: skewX(-5deg);
+    padding: 25px; border-radius: 15px;
+    backdrop-filter: blur(10px);
+    margin-top: 20px;
 }
 
-/* CENTRADO DE CONTENIDO */
+/* BOTONES ESTILO NEÓN */
+.btn-primary, .btn-secondary {
+    padding: 10px 20px; border: 1px solid var(--primary);
+    background: transparent; color: white; cursor: pointer;
+    text-transform: uppercase; font-weight: bold; transition: 0.3s;
+    margin: 5px; border-radius: 5px;
+}
+.btn-primary { background: var(--primary); box-shadow: 0 0 15px var(--primary); }
+
+/* PANEL PRINCIPAL CENTRADO */
+#panel {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 320px; background: rgba(0, 0, 0, 0.85);
+    border: 1px solid var(--primary); border-radius: 20px;
+    padding: 25px; box-shadow: 0 0 40px rgba(0, 112, 243, 0.4);
+    z-index: 1000;
+}
+
+/* IMAGEN DE PERFIL CIRCULAR */
+.avatar-container {
+    width: 100px; height: 100px; margin: 0 auto 15px;
+    border-radius: 50%; border: 3px solid var(--primary);
+    box-shadow: 0 0 20px var(--primary); overflow: hidden;
+}
+.avatar { width: 100%; height: 100%; object-fit: cover; }
+
+/* CONTENIDO CENTRADO EN PANTALLA */
 #main-content {
-    position: fixed; inset: 0; display: flex; justify-content: center; align-items: center;
-    text-align: center; z-index: 5;
+    position: fixed; inset: 0; display: flex; justify-content: center;
+    align-items: center; text-align: center; z-index: 5;
 }
-#main-content h1 {
-    font-size: 4rem; font-weight: 900;
-    text-shadow: 0 0 20px var(--primary);
-    animation: glitch 3s infinite;
+.content-wrapper h1 {
+    font-size: 3rem; color: white; text-shadow: 0 0 20px var(--primary);
 }
-@keyframes glitch { 0% { opacity: 1; } 50% { opacity: 0.8; transform: scale(1.02); } 100% { opacity: 1; } }
 
-.marquee-footer { background: rgba(0,0,0,0.8); border-top: 2px solid var(--primary); }
+.marquee-footer {
+    position: fixed; bottom: 0; width: 100%; background: rgba(0,0,0,0.9);
+    border-top: 1px solid var(--primary); padding: 8px; z-index: 2000;
+}
