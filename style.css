@@ -1,33 +1,46 @@
-:root { --primary: #0070f3; --bg: #00020a; --error: #ff0000; }
-body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; overflow: hidden; height: 100vh; }
+:root { --primary: #0070f3; --bg: #00020a; --err: #f00; }
+body { background: var(--bg); color: #fff; font-family: 'Courier New', monospace; margin: 0; overflow: hidden; height: 100vh; }
 
 /* FONDOS */
 .stars { position: fixed; inset: 0; z-index: -3; background: radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)); background-size: 200px 200px; }
-.glowing-void { position: fixed; top: 50%; left: 50%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(0,112,243,0.1), transparent); transform: translate(-50%, -50%); filter: blur(60px); }
+.glowing-void { position: fixed; top: 50%; left: 50%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(0,112,243,0.1), transparent); transform: translate(-50%, -50%); filter: blur(60px); z-index: -2; }
+.scanlines { position: fixed; inset: 0; background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.1) 50%); background-size: 100% 4px; pointer-events: none; z-index: 10; }
 
 /* ERROR 403 */
-.error-bg { position: fixed; inset: 0; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--error); z-index: 10000; }
+.error-bg { position: fixed; inset: 0; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--err); z-index: 10000; }
+.error-bg h1 { font-size: 100px; margin: 0; text-shadow: 0 0 20px var(--err); }
 
-/* MODALES Y PANELES */
-.modal-hidden { display: none; }
+/* LOADER Y MODAL */
 #loader { position: fixed; inset: 0; background: var(--bg); z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.modal-content { background: rgba(0,10,30,0.95); border: 1px solid var(--primary); padding: 20px; border-radius: 15px; width: 90%; max-width: 400px; }
-.terms-body { height: 150px; overflow-y: auto; font-size: 11px; margin: 15px 0; color: #aaa; text-align: left; }
+.modal-hidden { display: none; }
+.modal-content { background: rgba(0,5,15,0.95); border: 2px solid var(--primary); padding: 25px; border-radius: 20px; width: 85%; max-width: 400px; box-shadow: 0 0 30px var(--primary); }
+.terms-body { height: 180px; overflow-y: auto; font-size: 11px; margin: 15px 0; color: #aaa; text-align: left; }
 
-#panel { position: absolute; top: 20px; left: 20px; width: 260px; background: rgba(0,0,0,0.8); border: 1px solid var(--primary); border-radius: 15px; padding: 10px; z-index: 500; transition: 0.3s; }
-#panel.mini { height: 40px; overflow: hidden; }
+/* PANEL ESTILIZADO */
+#panel { position: absolute; top: 20px; left: 20px; width: 260px; background: rgba(0,0,0,0.85); border: 1px solid var(--primary); border-radius: 20px; padding: 10px; z-index: 1000; backdrop-filter: blur(10px); }
+#panel.mini .panel-body { display: none; }
 
-/* BOTONES */
-.button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
-.btn-primary, .btn-link { background: rgba(0,112,243,0.1); border: 1px solid var(--primary); color: white; padding: 10px; cursor: pointer; text-decoration: none; font-size: 11px; text-align: center; display: block; }
-.btn-primary:hover, .btn-link:hover { background: var(--primary); }
+#panel-header-container { display: flex; justify-content: center; padding: 10px 0; }
+#panel-toggle-btn { background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 5px 20px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; box-shadow: 0 0 10px var(--primary); transition: 0.3s; }
+#panel-toggle-btn:hover { background: var(--primary); color: #fff; }
 
-/* MI INFO Y CONTACTOS */
-#main-content { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; text-align: center; pointer-events: none; }
-.content-wrapper { pointer-events: all; width: 90%; max-width: 800px; }
-.contacts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
-.mini-panel { background: rgba(0,112,243,0.05); border: 1px solid rgba(0,112,243,0.3); padding: 15px; border-radius: 10px; }
-.btn-contact { display: block; color: white; text-decoration: none; font-size: 11px; margin: 5px 0; border-bottom: 1px solid #111; padding: 5px; }
+.avatar-container { width: 80px; height: 80px; margin: 10px auto; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 0 15px var(--primary); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.avatar { width: 100%; height: 100%; object-fit: cover; }
+#status-text { font-size: 10px; color: var(--primary); text-align: center; margin-bottom: 15px; }
+
+/* BOTONES Y CONTENIDO */
+.button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.btn-link, .btn-primary, .btn-secondary { padding: 10px; border: 1px solid var(--primary); background: rgba(0,112,243,0.1); color: #fff; text-decoration: none; font-size: 10px; text-align: center; cursor: pointer; transition: 0.3s; }
+.btn-link:hover { background: var(--primary); box-shadow: 0 0 10px var(--primary); }
+.btn-secondary { border-color: var(--err); color: var(--err); }
+
+#main-content { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; }
+.content-wrapper { width: 90%; max-width: 850px; text-align: center; }
+.contacts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+.mini-panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(0,112,243,0.3); padding: 15px; border-radius: 12px; }
+.btn-contact { display: block; padding: 8px; color: #fff; text-decoration: none; font-size: 11px; margin-top: 5px; border-left: 2px solid var(--primary); text-align: left; }
+.btn-contact:hover { background: var(--primary); }
 
 /* VISUALIZADOR */
-#visualizer { width: 100%; height: 40px; background: #000; }
+#visualizer { width: 100%; height: 40px; margin: 10px 0; background: #000; border-radius: 5px; }
+.controls button { background: none; border: 1px solid var(--primary); color: #fff; cursor: pointer; padding: 5px 10px; }
